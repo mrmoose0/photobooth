@@ -13,10 +13,10 @@ from PIL import Image
 # ==========================================
 # CONFIGURAZIONE
 # ==========================================
-PHOTO_DIR = "/home/lorenzo/photobooth/photos"
-IMMICH_URL = "https://photos.brahmaservice.it"
-IMMICH_API_KEY = "iXU9ys0WRLVBTHddSPx9VtkIGdsTW3KLJJS45OzioY"
-IMMICH_ALBUM_ID = "3c3ece5b-4485-415d-a4db-f380a4c9d242"
+PHOTO_DIR = "Photos folder"
+IMMICH_URL = "Immich server"
+IMMICH_API_KEY = "API key"
+IMMICH_ALBUM_ID = "Album ID"
 
 os.makedirs(PHOTO_DIR, exist_ok=True)
 
@@ -84,7 +84,7 @@ class PhotoboothApp:
 
         self.start_slideshow()
 
-        # Variabili Inattivit‡
+        # Variabili Inattivit√†
         self.inactivity_timeout = 20.0 # 120 secondi (2 minuti)
         self.last_activity_time = time.time()
 
@@ -121,11 +121,11 @@ class PhotoboothApp:
 
     def prepare_next_slide(self):
         if len(self.photos_list) > 1:
-            # Continua a scegliere a caso finchÈ non trova una foto diversa da quella attuale
+            # Continua a scegliere a caso finch√© non trova una foto diversa da quella attuale
             while True:
                 next_path = random.choice(self.photos_list)
                 # Confronta il percorso con l'immagine attualmente in mostra
-                # (per farlo ci serve sapere il path corrente, quindi lo aggiungiamo come variabile di stato se non c'Ë)
+                # (per farlo ci serve sapere il path corrente, quindi lo aggiungiamo come variabile di stato se non c'√®)
                 if not hasattr(self, 'current_photo_path_slideshow') or next_path != getattr(self, 'current_photo_path_slideshow', ''):
                     self.current_photo_path_slideshow = next_path
                     break
@@ -196,7 +196,7 @@ class PhotoboothApp:
                 print("Errore Immich:", e)
 
             self.state = "REVIEW"
-            self.last_activity_time = time.time() # Resetta il timer per il timeout di inattivit‡
+            self.last_activity_time = time.time() # Resetta il timer per il timeout di inattivit√†
         else:
             self.start_slideshow()
 
@@ -220,7 +220,7 @@ class PhotoboothApp:
                 self.running = False
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                # Registra l'attivit‡ dell'utente per resettare il timer di inattivit‡
+                # Registra l'attivit√† dell'utente per resettare il timer di inattivit√†
                 self.last_activity_time = time.time()
 
                 if event.button == 2: # Click Centrale
@@ -246,7 +246,7 @@ class PhotoboothApp:
         # Se siamo in visualizzazione foto o QR e sono passati 2 minuti, torna allo slideshow
         if self.state in ["REVIEW", "QR"]:
             if now - self.last_activity_time >= self.inactivity_timeout:
-                print("Timeout inattivit‡ raggiunto. Ritorno allo slideshow.")
+                print("Timeout inattivit√† raggiunto. Ritorno allo slideshow.")
                 self.start_slideshow()
 
         # Logica del Countdown
@@ -302,7 +302,7 @@ class PhotoboothApp:
                     next_pos_x = (self.screen_w - next_w) // 2
                     next_pos_y = (self.screen_h - next_h) // 2
 
-                    self.next_img.set_alpha(alpha) # Imposta l'opacit‡
+                    self.next_img.set_alpha(alpha) # Imposta l'opacit√†
                     self.screen.blit(self.next_img, (next_pos_x, next_pos_y))
 
         elif self.state == "COUNTDOWN":
